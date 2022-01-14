@@ -383,9 +383,10 @@
 							$('#success-notification').show();
 						},
 						error: function (req, error,errorThrown) {
-							alert('Error: ' + req.responseText);
-							alert('Req: ' + req.status);
-							alert('ErrowThrown: ' + errorThrown);
+							alert('The Submit Report hasn't worked. Please contact somebody!');
+							//alert('Error: ' + req.responseText);
+							//alert('Req: ' + req.status);
+							//alert('ErrowThrown: ' + errorThrown);
 						}
 					});
 				}).error(function () {
