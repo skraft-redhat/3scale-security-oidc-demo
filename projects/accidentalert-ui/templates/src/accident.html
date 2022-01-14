@@ -367,9 +367,9 @@
 							
 				var urlhttp = 'http://localhost:8080/accidentcenter/report';
 				var reqdata = JSON.stringify($('#report').serializeObject());
-				//alert('Token: ' + keycloak.token);
-				//alert('URL: ' + urlhttp);
-				//alert('reqdata: ' + reqdata);
+				alert('Token: ' + keycloak.token);
+				alert('URL: ' + urlhttp);
+				alert('reqdata: ' + reqdata);
 				
 				keycloak.updateToken(30).success(function () {
 					$.ajax({
@@ -379,14 +379,14 @@
 						dataType: "json",
 						data: reqdata,
 						success: function (data) {
-							// alert('Success');
+							alert('Success');
 							$('#success-notification').show();
 						},
 						error: function (req, error,errorThrown) {
 							alert('The Submit Report hasn't worked. Please contact somebody!');
-							//alert('Error: ' + req.responseText);
-							//alert('Req: ' + req.status);
-							//alert('ErrowThrown: ' + errorThrown);
+							alert('Error: ' + req.responseText);
+							alert('Req: ' + req.status);
+							alert('ErrowThrown: ' + errorThrown);
 						}
 					});
 				}).error(function () {
