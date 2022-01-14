@@ -342,7 +342,6 @@
 			todayBtn: "linked",
 			todayHighlight: true
 		});
-		alert('I am here');
 		$('#success-notification').hide();
 		(function ($) {
 			// countFld is the id of the field where you want the 'remaining chars. count' number
@@ -364,13 +363,13 @@
 			});
 
 			$('#postReport').click(function () {
-				alert('Customer has clicked on Submit Report');
+				//alert('Customer has clicked on Submit Report');
 							
 				var urlhttp = 'http://localhost:8080/accidentcenter/report';
 				var reqdata = JSON.stringify($('#report').serializeObject());
-				alert('Token: ' + keycloak.token);
-				alert('URL: ' + urlhttp);
-				alert('reqdata: ' + reqdata);
+				//alert('Token: ' + keycloak.token);
+				//alert('URL: ' + urlhttp);
+				//alert('reqdata: ' + reqdata);
 				
 				keycloak.updateToken(30).success(function () {
 					$.ajax({
@@ -380,7 +379,7 @@
 						dataType: "json",
 						data: reqdata,
 						success: function (data) {
-							alert('Success');
+							//alert('Success');
 							$('#success-notification').show();
 						},
 						error: function (req, error,errorThrown) {
@@ -408,7 +407,7 @@
 		var keycloak = Keycloak(keyOptions);
 		keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
 			console.log(authenticated ? 'authenticated' : 'not authenticated');
-			alert('Token' + keycloak.token);
+			//alert('Token: ' + keycloak.token);
 			if (authenticated) {
 				if (keycloak.hasRealmRole('policedept')) {
 					$('#accident-app').show();
