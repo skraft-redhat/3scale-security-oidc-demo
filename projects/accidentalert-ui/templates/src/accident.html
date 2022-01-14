@@ -346,8 +346,6 @@
 			todayBtn: "linked",
 			todayHighlight: true
 		});
-		alert('Ich bin hier 4');
-
 		//$('#success-notification').hide();
 		(function ($) {
 			// countFld is the id of the field where you want the 'remaining chars. count' number
@@ -378,6 +376,7 @@
 						$('#success-notification').show();
 					},
 					error: function (req, error) {
+						alert('Submit Report has not worked out. Something is wrong!');
 						console.log(error);
 					}
 				});
@@ -386,41 +385,7 @@
 	</script>
 
 
-	<script type="text/javascript">
-		var keyOptions = {
-			url: 'http://localhost:18080/auth',
-			realm: 'insurance',
-			clientId: 'accidentalert-ui'
-		};
-		alert('Ich bin hier 1');
-		var keycloak = Keycloak(keyOptions);
-		keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
-			console.log(authenticated ? 'authenticated' : 'not authenticated');
-			if (authenticated) {
-				if (keycloak.hasRealmRole('policedept')) {
-					alert('Ich bin hier 2');
-
-					$('#accident-app').show();
-				}
-				else {
-					alert('User cannot file reports');
-				}
-				$('#loginUrl').hide();
-			}
-			else {
-				$('#accident-app').hide();
-				$('#loginUrl').show();
-			}
-		}).error(function () {
-			console.log('failed to initialize: ' + data);
-		});
-		var opts = {
-			redirectUri: window.location.origin + "/accident.html"
-		};
-		var loginUrl = keycloak.createLoginUrl(opts);
-		alert('Ich bin hier 3');
-		document.getElementById('loginUrl').href = loginUrl;
-	</script>
+	
 
 </body>
 
