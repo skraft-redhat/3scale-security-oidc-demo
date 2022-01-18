@@ -401,18 +401,20 @@
 		var keycloak = Keycloak(keyOptions);
 		keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
 			console.log(authenticated ? 'authenticated' : 'not authenticated');
-			//alert('Token: ' + keycloak.token);
+			console.log('Token: ' + keycloak.token);
 			if (authenticated) {
 				if (keycloak.hasRealmRole('policedept')) {
+					console.log('User has the right role');
 					$('#accident-app').show();
 				}
 				else {
 					alert('User really cannot file reports');
-					//console.log('User unable to file reports');
+					console.log('User unable to file reports');
 				}
 				$('#loginUrl').hide();
 			}
 			else {
+				console.log('Re-route to Keycloak');
 				$('#accident-app').hide();
 				$('#loginUrl').show();
 			}
