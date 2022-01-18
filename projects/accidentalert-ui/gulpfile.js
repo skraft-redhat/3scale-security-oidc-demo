@@ -95,6 +95,7 @@ gulp.task('html', ['clean'], function () {
         .pipe(include())
         .pipe(replace('PROCESS.ENVIRONMENT.SSO_URL', process.env.SSO_URL || 'http://localhost:18080'))
         .pipe(replace('PROCESS.ENVIRONMENT.BACKEND_URL', process.env.BACKEND_URL || 'http://localhost:8080'))
+        .pipe(replace('PROCESS.ENVIRONMENT.KEYCLOAK_REALM', process.env.KEYCLOAK_REALM || 'http://localhost:8080'))
         .pipe(replace('PROCESS.ENVIRONMENT.CLIENT_ID', process.env.CLIENT_ID))
         
         .on("error", notify.onError({ message: "Error: <%= error.message %>", title: "Error running html task" }))
