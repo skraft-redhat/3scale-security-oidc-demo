@@ -363,34 +363,28 @@
 			});
 
 			$('#postReport').click(function () {
-				//alert('Customer has clicked on Submit Report');
+				console.log('User has clicked on Submit button!');
 							
 				var urlhttp = 'http://localhost:8080/accidentcenter/report';
 				var reqdata = JSON.stringify($('#report').serializeObject());
-				//alert('Token: ' + keycloak.token);
-				//alert('URL: ' + urlhttp);
-				//alert('reqdata: ' + reqdata);
-				
-				keycloak.updateToken(30).success(function () {
-					$.ajax({
-						type: "post",
-						contentType: "application/json",
-						url: urlhttp,
-						dataType: "json",
-						data: reqdata,
-						success: function (data) {
-							//alert('Success');
-							$('#success-notification').show();
-						},
-						error: function (req, error,errorThrown) {
-							alert('The Submit Report has not worked. Please contact somebody!');
-							//alert('Error: ' + req.responseText);
-							//alert('Req: ' + req.status);
-							//alert('ErrowThrown: ' + errorThrown);
-						}
-					});
-				}).error(function () {
-					alert('Failed to refresh token');
+				console.log('URL for back-end: ' + urlhttp);
+				console.log('Request Data is: '+ reqdata);
+				$.ajax({
+					type: "post",
+					contentType: "application/json",
+					url: urlhttp,
+					dataType: "json",
+					data: reqdata,
+					success: function (data) {
+						console.log('Post has worked successfully!');
+						$('#success-notification').show();
+					},
+					error: function (req, error,errorThrown) {
+						alert('The Submit Report has not worked. Please contact somebody!');
+						console.log('Error: ' + req.responseText);
+						console.log('Req: ' + req.status);
+						console.log('ErrowThrown: ' + errorThrown);
+					}
 				});
 				console.log('End of Function');
 			});
