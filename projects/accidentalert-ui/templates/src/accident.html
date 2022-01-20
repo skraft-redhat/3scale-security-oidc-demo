@@ -411,6 +411,7 @@
 			console.log('User: ' + req.kauth.grant.access_token.content.preferred_username);
 			if (authenticated) {
 				$('#loginUrl').hide();
+				$('#user').value = req.kauth.grant.access_token.content.preferred_username;
 			}
 			else {
 				console.log('Re-route to Keycloak');
