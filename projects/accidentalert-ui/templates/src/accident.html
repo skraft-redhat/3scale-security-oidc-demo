@@ -411,6 +411,7 @@
 			//console.log('User: ' + keycloak.token.preferred_username);
 			if (authenticated) {
 				$('#loginUrl').hide();
+				$('#accident-app').show();
 				// MISSING: Would be nice to get the user-name and e-mail from the token and write it into the form (and make the fields read-only)
 				// $('#user').value = keycloak.token.preferred_username;
 			}
