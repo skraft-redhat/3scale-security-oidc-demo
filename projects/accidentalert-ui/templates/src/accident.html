@@ -372,6 +372,7 @@
 					var reqdata = JSON.stringify($('#report').serializeObject());
 					console.log('URL: ' + urlhttp);	
 					console.log('Reqdata: ' + reqdata);
+					console.log('Bearer token: ' + keycloak.token);
 					$.ajax({
 						type: "post",
 						contentType: "application/json",
