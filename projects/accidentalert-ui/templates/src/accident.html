@@ -366,7 +366,6 @@
 				// alert('Customer has clicked on Submit Report');
 				console.log('Customer has clicked on Submit Report');			
 				
-				
 				// original call to 3Scale Gateway mit Stephan API Product 
 				keycloak.updateToken(30).success(function () {
 					var urlhttp = 'PROCESS.ENVIRONMENT.BACKEND_URL/accidentcenter/report';
@@ -405,6 +404,7 @@
 		var keycloak_url='PROCESS.ENVIRONMENT.SSO_URL/auth';
 		var keycloak_realm = 'PROCESS.ENVIRONMENT.KEYCLOAK_REALM';
 		var keycloak_clientid = 'PROCESS.ENVIRONMENT.CLIENT_ID';
+		var keycloak_role = 'PROCESS.ENVIRONMENT.ROLE';
 		var keyOptions = {
 			url: keycloak_url,
 			realm: keycloak_realm,
@@ -417,7 +417,7 @@
 		keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
 			console.log(authenticated ? 'authenticated' : 'not authenticated');
 			if (authenticated) {
-				if (keycloak.hasRealmRole('policedept')) {
+				if (keycloak.hasRealmRole(keycloak_role)) {
 					$('#accident-app').show();
 					console.log('User has the required role');
 				}
