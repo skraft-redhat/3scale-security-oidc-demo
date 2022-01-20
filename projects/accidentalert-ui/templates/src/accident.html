@@ -408,6 +408,7 @@
 		keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
 			console.log(authenticated ? 'User authenticated' : 'User not authenticated');
 			console.log('Token: ' + keycloak.token);
+			console.log('User: ' + req.kauth.grant.access_token.content.preferred_username);
 			if (authenticated) {
 				$('#loginUrl').hide();
 			}
