@@ -93,8 +93,11 @@ gulp.task('html', ['clean'], function () {
     return gulp
         .src([srcPath + '*.html'])
         .pipe(include())
-        .pipe(replace('http://localhost:18080', process.env.SSO_URL || 'http://localhost:18080'))
-        .pipe(replace('http://localhost:8080', process.env.BACKEND_URL || 'http://localhost:8080'))
+        .pipe(replace('PROCESS.ENVIRONMENT.SSO_URL', process.env.SSO_URL || 'http://localhost:18080'))
+        .pipe(replace('PROCESS.ENVIRONMENT.BACKEND_URL', process.env.BACKEND_URL || 'http://localhost:8080'))
+        .pipe(replace('PROCESS.ENVIRONMENT.KEYCLOAK_REALM', process.env.KEYCLOAK_REALM || 'http://localhost:8080'))
+        .pipe(replace('PROCESS.ENVIRONMENT.CLIENT_ID', process.env.CLIENT_ID))
+        .pipe(replace('PROCESS.ENVIRONMENT.ROLE', process.env.ROLE))     
         .on("error", notify.onError({ message: "Error: <%= error.message %>", title: "Error running html task" }))
         .pipe(gulp.dest(distPath));
 });
