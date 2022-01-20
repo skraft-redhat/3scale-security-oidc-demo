@@ -359,10 +359,15 @@
 			});
 
 			$('#postReport').click(function () {
+				var urlhttp = 'PROCESS.ENVIRONMENT.BACKEND_URL/accidentcenter/report';
+				var reqdata = JSON.stringify($('#report').serializeObject());
+				console.log('URL: ' + urlhttp);	
+				console.log('Reqdata: ' + reqdata);
+				
 				$.ajax({
 					type: "post",
 					contentType: "application/json",
-					url: "http://localhost:8080/accidentcenter/report",
+					url: "/accidentcenter/report",
 					dataType: "json",
 					data: JSON.stringify($('#report').serializeObject()),
 					success: function (data) {
