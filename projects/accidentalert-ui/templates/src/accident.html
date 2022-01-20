@@ -367,7 +367,7 @@
 				$.ajax({
 					type: "post",
 					contentType: "application/json",
-					url: "/accidentcenter/report",
+					url: urlhttp,
 					dataType: "json",
 					data: JSON.stringify($('#report').serializeObject()),
 					success: function (data) {
