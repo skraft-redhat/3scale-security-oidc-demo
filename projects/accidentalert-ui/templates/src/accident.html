@@ -380,7 +380,7 @@
 						$('#success-notification').show();
 					},
 					error: function (req, error,errorThrown) {
-						alert('The Submit Report has not worked. Please contact somebody!');
+						alert('The Submit Report has not worked. Please contact Shadowman Insurance!');
 						console.log('Error: ' + req.responseText);
 						console.log('Req: ' + req.status);
 						console.log('ErrowThrown: ' + errorThrown);
@@ -393,24 +393,22 @@
 
 
 	<script type="text/javascript">
+		var keycloak_url='PROCESS.ENVIRONMENT.SSO_URL/auth';
+		var keycloak_realm = 'PROCESS.ENVIRONMENT.KEYCLOAK_REALM';
+		var keycloak_clientid = 'PROCESS.ENVIRONMENT.CLIENT_ID';
 		var keyOptions = {
-			url: 'http://localhost:18080/auth',
-			realm: 'insurance',
-			clientId: 'accidentalert-ui'
+			url: keycloak_url,
+			realm: keycloak_realm,
+			clientId: keycloak_clientid
 		};
 		var keycloak = Keycloak(keyOptions);
+		console.log('Keycloak URL: ' + keycloak_url);
+		console.log('Realm ' + keycloak_realm);
+		console.log('ClientID ' + keycloak_clientid);
 		keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
-			console.log(authenticated ? 'authenticated' : 'not authenticated');
+			console.log(authenticated ? 'User authenticated' : 'User not authenticated');
 			console.log('Token: ' + keycloak.token);
 			if (authenticated) {
-				if (keycloak.hasRealmRole('policedept')) {
-					console.log('User has the right role');
-					$('#accident-app').show();
-				}
-				else {
-					alert('User really cannot file reports');
-					console.log('User unable to file reports');
-				}
 				$('#loginUrl').hide();
 			}
 			else {
