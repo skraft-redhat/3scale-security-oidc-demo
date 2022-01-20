@@ -393,18 +393,25 @@
 
 
 	<script type="text/javascript">
+		var keycloak_url='PROCESS.ENVIRONMENT.SSO_URL/auth';
+		var keycloak_realm = 'PROCESS.ENVIRONMENT.KEYCLOAK_REALM';
+		var keycloak_clientid = 'PROCESS.ENVIRONMENT.CLIENT_ID';
+		var keycloak_role = 'PROCESS.ENVIRONMENT.ROLE';
 		var keyOptions = {
-			url: 'http://localhost:18080/auth',
-			realm: 'insurance',
-			clientId: 'accidentalert-ui'
+			url: keycloak_url,
+			realm: keycloak_realm,
+			clientId: keycloak_clientid
 		};
 		var keycloak = Keycloak(keyOptions);
+		console.log('Keycloak URL: ' + keycloak_url);
+		console.log('Realm ' + keycloak_realm);
+		console.log('ClientID ' + keycloak_clientid);
 		keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
 			console.log(authenticated ? 'authenticated' : 'not authenticated');
 			console.log('Token: ' + keycloak.token);
 			if (authenticated) {
-				if (keycloak.hasRealmRole('policedept')) {
-					console.log('User has the right role');
+				if (keycloak.hasRealmRole(keycloak_role)) {
+					console.log('User is allowed to file reports as he/she has the role ' + keycloak_role);
 					$('#accident-app').show();
 				}
 				else {
