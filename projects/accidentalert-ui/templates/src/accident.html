@@ -372,9 +372,6 @@
 				$.ajax({
 					type: "post",
 					contentType: "application/json",
-					headers: {
-						'Authorization': 'Bearer ' + keycloak.token
-					},
 					url: urlhttp,
 					dataType: "json",
 					data: reqdata,
