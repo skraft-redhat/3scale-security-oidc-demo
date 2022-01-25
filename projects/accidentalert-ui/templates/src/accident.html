@@ -368,7 +368,7 @@
 				
 				// original call to 3Scale Gateway mit Stephan API Product 
 				keycloak.updateToken(30).success(function () {
-					var urlhttp = 'PROCESS.ENVIRONMENT.BACKEND_URL/accidentcenter/report';
+					var urlhttp = 'PROCESS.ENVIRONMENT.BACKEND_URL';
 					var reqdata = JSON.stringify($('#report').serializeObject());
 					console.log('URL: ' + urlhttp);	
 					console.log('Reqdata: ' + reqdata);
