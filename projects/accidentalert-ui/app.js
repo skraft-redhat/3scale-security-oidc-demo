@@ -6,10 +6,10 @@ console.log(process.env);
 
 // writing from Deployment Config to temporary variables
 var BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000/secured";
-var SSO_URL = process.env.SSO_URL || "http://localhost:8080/auth";
+var KEYCLOAK_URL = process.env.KEYCLOAK_URL || "http://localhost:8080/auth";
 var KEYCLOAK_REALM = process.env.KEYCLOAK_REALM || "insurance";
 var KEYCLOAK_CLIENT_ID = process.env.KEYCLOAK_CLIENT_ID || "accidentui-client";
-var KEYCLOAK_ROLE = process.env.AUTHENTICATION_OPTION || "none";
+var KEYCLOAK_ROLE = process.env.KEYCLOAK_ROLE || "none";
 var AUTHENTICATION_OPTION = process.env.AUTHENTICATION_OPTION || "none";
 
 var PORT = process.env.PORT || 8080;
