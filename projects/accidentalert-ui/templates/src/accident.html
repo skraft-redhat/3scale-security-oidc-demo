@@ -465,13 +465,14 @@
 			}).error(function () {
 				console.log('Failed to initialize!');
 			});
+			var opts = {
+				redirectUri: window.location.origin + "/accident.html"
+			};
+			var loginUrl = keycloak.createLoginUrl(opts);
+			console.log('LoginURL: '+loginUrl);
+			document.getElementById('loginUrl').href = loginUrl;
 		}
-		var opts = {
-			redirectUri: window.location.origin + "/accident.html"
-		};
-		var loginUrl = keycloak.createLoginUrl(opts);
-		console.log('LoginURL: '+loginUrl);
-		document.getElementById('loginUrl').href = loginUrl;
+		
 	</script>
 
 
