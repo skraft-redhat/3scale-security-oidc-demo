@@ -415,17 +415,17 @@
 	</script>
 	
 	<script type="text/javascript">
-		var sso_url = 'ENVIRONMENT.SSO_URL';
+		var keycloak_url = 'ENVIRONMENT.KEYCLOAK_URL';
 		var keycloak_realm = 'ENVIRONMENT.KEYCLOAK_REALM';
 		var keycloak_client_id = 'ENVIRONMENT.KEYCLOAK_CLIENT_ID';
 		var keycloak_role = 'ENVIRONMENT.KEYCLOAK_ROLE';
 		var authentication_option = 'ENVIRONMENT.AUTHENTICATION_OPTION';
 			
-		console.log('ENVIRONMENT.KEYCLOAK_URL' + keycloak_url);
-		console.log('ENVIRONMENT.KEYCLOAK_REALM' + keycloak_realm);
-		console.log('ENVIRONMENT.CLIENT_ID' + keycloak_client_id);
-		console.log('ENVIRONMENT.KEYCLOAK_ROLE' + keycloak_role);
-		console.log('ENVIRONMENT.AUTHENTICATION_OPTION' + authentication_option);
+		console.log('KEYCLOAK_URL' + keycloak_url);
+		console.log('KEYCLOAK_REALM' + keycloak_realm);
+		console.log('CLIENT_ID' + keycloak_client_id);
+		console.log('KEYCLOAK_ROLE' + keycloak_role);
+		console.log('AUTHENTICATION_OPTION' + authentication_option);
 		
 		if (authentication_option === 'unprotected') {
 			console.log('No authentication performed!');
