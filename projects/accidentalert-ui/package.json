@@ -5,13 +5,15 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "http-server templates/dist --no-color",
+    "start": "node app.js",
     "build": "gulp build",
     "dev": "gulp serve"
   },
   "author": "@hguerreroo",
   "license": "MIT",
   "devDependencies": {
+    "express": "^4.17.1",
+    "string-replace-middleware": "^1.0.2",
     "event-stream": "^3.3.4",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.1.0",
