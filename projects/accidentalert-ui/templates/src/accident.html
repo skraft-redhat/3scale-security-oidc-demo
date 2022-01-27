@@ -338,8 +338,20 @@
 			todayBtn: "linked",
 			todayHighlight: true
 		});
+		// get values from Environment Variables 
+		var urlhttp = 'PROCESS.ENVIRONMENT.BACKEND_URL';
+		
+		var backend_url = 'ENVIRONMENT.BACKEND_URL';
+		
+		var authentication_option = 'ENVIRONMENT.AUTHENTICATION_OPTION';
+		
+		console.log('ENVIRONMENT.BACKEND_URL: '+ backend_url);
+		
+		console.log('' + authentication_option);
+		
 		$('#success-notification').hide();
 		$('#accident-app').show();
+		
 		(function ($) {
 			// countFld is the id of the field where you want the 'remaining chars. count' number
 			// to be displayed.
@@ -359,27 +371,105 @@
 			});
 
 			$('#postReport').click(function () {
-				var urlhttp = 'PROCESS.ENVIRONMENT.BACKEND_URL';
+				
 				var reqdata = JSON.stringify($('#report').serializeObject());
 				console.log('URL: ' + urlhttp);	
 				console.log('Reqdata: ' + reqdata);
 				
-				$.ajax({
-					type: "post",
-					contentType: "application/json",
-					url: urlhttp,
-					dataType: "json",
-					data: JSON.stringify($('#report').serializeObject()),
-					success: function (data) {
-						$('#success-notification').show();
-					},
-					error: function (req, error) {
-						alert('Submit Report has not worked out. Something is wrong!');
-						console.log(error);
-					}
-				});
+				if (authentication_option === 'OIDC') {
+					$.ajax({
+						type: "post",
+						contentType: "application/json",
+						headers: {
+							'Authorization': 'Bearer ' + keycloak.token
+						},
+						url: urlhttp,
+						dataType: "json",
+						data: reqdata,
+						success: function (data) {
+							console.log('Called back-end successfully!');
+							$('#success-notification').show();
+						},
+						error: function (req, error,errorThrown) {
+							alert('Back-end could not be accessed!');
+							console.log('Error:' + errorThrown);
+						}
+					});
+				} else {
+					$.ajax({
+						type: "post",
+						contentType: "application/json",
+						url: urlhttp,
+						dataType: "json",
+						data: reqdata,
+						success: function (data) {
+							console.log('Called back-end successfully!');
+							$('#success-notification').show();
+						},
+						error: function (req, error) {
+							alert('Back-end could not be accessed!');
+							console.log(error);
+						}
+					});	
+				}
+				
+				
 			});
 		})(jQuery);
+	</script>
+	
+	<script type="text/javascript">
+		var sso_url = 'ENVIRONMENT.SSO_URL';
+		var keycloak_realm = 'ENVIRONMENT.KEYCLOAK_REALM';
+		var keycloak_client_id = 'ENVIRONMENT.KEYCLOAK_CLIENT_ID';
+		var keycloak_role = 'ENVIRONMENT.KEYCLOAK_ROLE';
+		
+		console.log('ENVIRONMENT.KEYCLOAK_URL' + keycloak_url);
+		console.log('ENVIRONMENT.KEYCLOAK_REALM' + keycloak_realm);
+		console.log('ENVIRONMENT.CLIENT_ID' + keycloak_client_id);
+		console.log('ENVIRONMENT.KEYCLOAK_ROLE' + keycloak_role);
+		
+		var keyOptions = {
+			url: keycloak_url,
+			realm: keycloak_realm,
+			clientId: keycloak_client_id
+		};
+		var keycloak = Keycloak(keyOptions);
+		
+		keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
+			console.log(authenticated ? 'authenticated' : 'not authenticated');
+			if (authenticated) {
+				if (keycloak_role === '') {
+					console.log ('No role check performed');
+					$('#loginUrl').hide();
+				} else {
+				
+					if (keycloak.hasRealmRole(keycloak_role)) {
+						$('#accident-app').show();
+						console.log('User has the required role');
+						$('#loginUrl').hide();
+					}
+					else {
+						alert('User really cannot file reports');
+						console.log('User unable to file reports');
+						$('#loginUrl').show();
+					}
+				
+				}
+			}
+			else {
+				$('#accident-app').hide();
+				$('#loginUrl').show();
+			}
+		}).error(function () {
+			console.log('Failed to initialize!');
+		});
+		var opts = {
+			redirectUri: window.location.origin + "/accident.html"
+		};
+		var loginUrl = keycloak.createLoginUrl(opts);
+		console.log('LoginURL: '+loginUrl);
+		document.getElementById('loginUrl').href = loginUrl;
 	</script>
 
 
