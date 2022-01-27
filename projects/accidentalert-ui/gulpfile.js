@@ -94,7 +94,6 @@ gulp.task('html', ['clean'], function () {
         .src([srcPath + '*.html'])
         .pipe(include())
 
-        .pipe(replace('PROCESS.ENVIRONMENT.BACKEND_URL', process.env.BACKEND_URL))
         .on("error", notify.onError({ message: "Error: <%= error.message %>", title: "Error running html task" }))
         .pipe(gulp.dest(distPath));
 });

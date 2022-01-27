@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "http-server templates/dist --no-color",
+    "start": "node app.js",
     "build": "gulp build",
     "dev": "gulp serve"
   },
@@ -32,6 +32,7 @@
     "patternfly": "^3.37.1"
   },
   "dependencies": {
-    "http-server": "^0.11.1"
+    "express": "^4.17.1",
+    "string-replace-middleware": "^1.0.2"
   }
 }
