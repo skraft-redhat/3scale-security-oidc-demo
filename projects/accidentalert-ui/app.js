@@ -14,7 +14,7 @@ app.use(stringReplace({
    'PROCESS.ENVIRONMENT.BACKEND_URL': BACKEND_URL,
    'PROCESS.ENVIRONMENT.SSO_URL': SSO_URL
 }));
-app.use(express.static('template/dest'))
+app.use(express.static('templates/dist'))
 
 app.get('/', function(req, res) {
     res.render('index.html');
