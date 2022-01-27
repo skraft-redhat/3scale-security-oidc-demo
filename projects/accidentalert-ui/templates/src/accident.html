@@ -430,7 +430,7 @@
 		
 		if (authentication_option === 'unprotected') {
 			console.log('No authentication performed!');
-		} else 
+		} else {
 			var keyOptions = {
 				url: keycloak_url,
 				realm: keycloak_realm,
@@ -458,8 +458,7 @@
 						}
 				
 					}
-				}
-				else {
+				} else {
 					$('#accident-app').hide();
 					$('#loginUrl').show();
 				}
