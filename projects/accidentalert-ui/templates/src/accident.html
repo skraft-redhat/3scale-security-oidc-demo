@@ -422,11 +422,11 @@
 		var keycloak_role = 'ENVIRONMENT.KEYCLOAK_ROLE';
 		var authentication_option = 'ENVIRONMENT.AUTHENTICATION_OPTION';
 			
-		console.log('KEYCLOAK_URL' + keycloak_url);
-		console.log('KEYCLOAK_REALM' + keycloak_realm);
-		console.log('CLIENT_ID' + keycloak_client_id);
-		console.log('KEYCLOAK_ROLE' + keycloak_role);
-		console.log('AUTHENTICATION_OPTION' + authentication_option);
+		console.log('KEYCLOAK_URL: ' + keycloak_url);
+		console.log('KEYCLOAK_REALM: ' + keycloak_realm);
+		console.log('CLIENT_ID: ' + keycloak_client_id);
+		console.log('KEYCLOAK_ROLE: ' + keycloak_role);
+		console.log('AUTHENTICATION_OPTION: ' + authentication_option);
 		
 		if (authentication_option === 'unprotected') {
 			console.log('No authentication performed!');
@@ -444,6 +444,7 @@
 					if (keycloak_role === 'none') {
 						console.log ('No role check performed');
 						$('#loginUrl').hide();
+						$('#accident-app').show();
 					} else {
 				
 						if (keycloak.hasRealmRole(keycloak_role)) {
