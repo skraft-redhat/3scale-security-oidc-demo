@@ -441,7 +441,7 @@
 			keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
 				console.log(authenticated ? 'authenticated' : 'not authenticated');
 				if (authenticated) {
-					if (keycloak_role === '') {
+					if (keycloak_role === 'none') {
 						console.log ('No role check performed');
 						$('#loginUrl').hide();
 					} else {
