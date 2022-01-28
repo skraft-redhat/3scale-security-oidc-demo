@@ -413,6 +413,12 @@
 				if (keycloak.hasRealmRole(keycloak_role)) {
 					console.log('User is allowed to file reports as he/she has the role ' + keycloak_role);
 					$('#accident-app').show();
+					document.getElementById('contactName').value = keycloak.idTokenParsed.name;
+					document.getElementById('contactName').readOnly = true;
+					document.getElementById('email').value = keycloak.idTokenParsed.email;
+					document.getElementById('email').readOnly = true;
+					document.getElementById('phone').value = keycloak.idTokenParsed.phone;
+					document.getElementById('phone').readOnly = true;
 				}
 				else {
 					alert('User really cannot file reports');
