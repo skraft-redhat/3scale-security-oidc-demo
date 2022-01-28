@@ -413,6 +413,13 @@
 				$('#loginUrl').hide();
 				$('#accident-app').show();
 				document.getElementById('contactName').value = keycloak.idTokenParsed.name;
+				document.getElementById('contactName').readOnly = true;
+				document.getElementById('email').value = keycloak.idTokenParsed.email;
+				document.getElementById('email').readOnly = true;
+				document.getElementById('phone').value = keycloak.idTokenParsed.phone;
+				document.getElementById('phone').readOnly = true;
+
+
 				// MISSING: Would be nice to get the user-name and e-mail from the token and write it into the form (and make the fields read-only)
 				// $('#user').value = keycloak.token.preferred_username;
 			}
