@@ -453,7 +453,7 @@
 							$('#loginUrl').hide();
 						}
 						else {
-							alert('User really cannot file reports');
+							alert('User cannot file reports');
 							console.log('User unable to file reports');
 							$('#loginUrl').show();
 						}
@@ -471,7 +471,7 @@
 			};
 			var loginUrl = keycloak.createLoginUrl(opts);
 			console.log('LoginURL: '+loginUrl);
-			//document.getElementById('loginUrl').href = loginUrl;
+			document.getElementById('loginUrl').href = loginUrl;
 		}
 		
 	</script>
