@@ -437,15 +437,7 @@
 				clientId: keycloak_client_id
 			};
 			var keycloak = Keycloak(keyOptions);
-			var opts = {
-				redirectUri: window.location.origin + "/accident.html"
-			};
-			var loginUrl = keycloak.createLoginUrl(opts);
-			
-			console.log('LoginURL: '+loginUrl);
-			
-			document.getElementById('loginUrl').href = loginUrl;
-			
+						
 			keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
 				console.log(authenticated ? 'authenticated' : 'not authenticated');
 				if (authenticated) {
@@ -476,8 +468,14 @@
 			}).error(function () {
 				console.log('Failed to initialize!');
 			});
+			var opts = {
+				redirectUri: window.location.origin + "/accident.html"
+			};
+			var loginUrl = keycloak.createLoginUrl(opts);
 			
+			console.log('LoginURL: '+loginUrl);
 			
+			document.getElementById('loginUrl').href = loginUrl;	
 		}
 		
 	</script>
