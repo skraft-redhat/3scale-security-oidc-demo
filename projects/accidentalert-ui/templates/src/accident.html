@@ -437,28 +437,38 @@
 				clientId: keycloak_client_id
 			};
 			var keycloak = Keycloak(keyOptions);
-		
+			var opts = {
+				redirectUri: window.location.origin + "/accident.html"
+			};
+			var loginUrl = keycloak.createLoginUrl(opts);
+			
+			console.log('LoginURL: '+loginUrl);
+			
+			document.getElementById('loginUrl').href = loginUrl;
+			
 			keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
 				console.log(authenticated ? 'authenticated' : 'not authenticated');
 				if (authenticated) {
 					if (keycloak_role === 'none') {
 						console.log ('No role check performed');
-						$('#loginUrl').hide();
 						$('#accident-app').show();
+						$('#loginUrl').hide();
 					} else {
 				
 						if (keycloak.hasRealmRole(keycloak_role)) {
 							$('#accident-app').show();
-							console.log('User has the required role');
 							$('#loginUrl').hide();
+							console.log('User has the required role');
 						}
 						else {
 							alert('User cannot file reports');
 							console.log('User unable to file reports');
 							$('#loginUrl').show();
+							$('#accident-app').hide();
 						}
-				
+						
 					}
+					
 				} else {
 					$('#accident-app').hide();
 					$('#loginUrl').show();
@@ -466,12 +476,8 @@
 			}).error(function () {
 				console.log('Failed to initialize!');
 			});
-			var opts = {
-				redirectUri: window.location.origin + "/accident.html"
-			};
-			var loginUrl = keycloak.createLoginUrl(opts);
-			console.log('LoginURL: '+loginUrl);
-			document.getElementById('loginUrl').href = loginUrl;
+			
+			
 		}
 		
 	</script>
