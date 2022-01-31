@@ -442,6 +442,13 @@
 			keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
 				console.log(authenticated ? 'authenticated' : 'not authenticated');
 				if (authenticated) {
+					document.getElementById('contactName').value = keycloak.idTokenParsed.name;
+					document.getElementById('contactName').readOnly = true;
+					document.getElementById('email').value = keycloak.idTokenParsed.email;
+					document.getElementById('email').readOnly = true;
+					document.getElementById('phone').value = keycloak.idTokenParsed.phone;
+					document.getElementById('phone').readOnly = true;
+			
 					if (keycloak_role === 'none') {
 						console.log ('No role check performed');
 						$('#accident-app').show();
