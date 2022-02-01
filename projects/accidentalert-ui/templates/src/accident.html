@@ -446,6 +446,11 @@
 			console.log('Start initializing Keycloak');			
 			keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
 				console.log(authenticated ? 'authenticated' : 'not authenticated');
+				var opts = {
+					redirectUri: window.location.origin + "/accident.html"
+				};
+				var loginUrl = keycloak.createLoginUrl(opts);		
+				console.log('LoginURL: '+loginUrl);
 				if (authenticated) {
 					console.log('Keycloak token: ' + keycloak.token);
 					document.getElementById('contactName').value = keycloak.idTokenParsed.name;
@@ -468,6 +473,7 @@
 						else {
 							alert('User cannot file reports');
 							console.log('User unable to file reports. Reason: Does not have the role ' + keycloak_role);
+							keycloak.logout(loginUrl)
 							$('#loginUrl').show();
 							$('#accident-app').hide();
 						}
@@ -479,11 +485,8 @@
 			}).error(function () {
 				alert('Failed to initialize Keycloak!');
 			});
-			var opts = {
-				redirectUri: window.location.origin + "/accident.html"
-			};
-			var loginUrl = keycloak.createLoginUrl(opts);		
-			console.log('LoginURL: '+loginUrl);
+			
+			
 			document.getElementById('loginUrl').href = loginUrl;	
 		}
 	</script>
