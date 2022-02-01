@@ -372,10 +372,9 @@
 			$('#postReport').click(function () {
 				
 				var reqdata = JSON.stringify($('#report').serializeObject());
-				console.log('URL: ' + backend_url);	
 				console.log('Reqdata: ' + reqdata);
 				
-				if (authentication_option === 'OIDC') {
+				if (authentication_option === 'fully_protected') {
 					$.ajax({
 						type: "post",
 						contentType: "application/json",
@@ -437,16 +436,18 @@
 			$('#accident-app').show();
 			
 		} else {
+			console.log('Authentication required!');
 			var keyOptions = {
 				url: keycloak_url,
 				realm: keycloak_realm,
 				clientId: keycloak_client_id
 			};
 			var keycloak = Keycloak(keyOptions);
-						
+			console.log('Start initializing Keycloak');			
 			keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
 				console.log(authenticated ? 'authenticated' : 'not authenticated');
 				if (authenticated) {
+					console.log('Keycloak token: ' + keycloak.token);
 					document.getElementById('contactName').value = keycloak.idTokenParsed.name;
 					document.getElementById('contactName').readOnly = true;
 					document.getElementById('email').value = keycloak.idTokenParsed.email;
@@ -462,11 +463,11 @@
 						if (keycloak.hasRealmRole(keycloak_role)) {
 							$('#accident-app').show();
 							$('#loginUrl').hide();
-							console.log('User has the required role');
+							console.log('User has the required role ' + keycloak_role);
 						}
 						else {
 							alert('User cannot file reports');
-							console.log('User unable to file reports');
+							console.log('User unable to file reports. Reason: Does not have the role ' + keycloak_role);
 							$('#loginUrl').show();
 							$('#accident-app').hide();
 						}
