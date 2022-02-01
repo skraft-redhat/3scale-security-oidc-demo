@@ -468,7 +468,6 @@
 						else {
 							alert('User cannot file reports');
 							console.log('User unable to file reports. Reason: Does not have the role ' + keycloak_role);
-							keycloak.logout(keycloak.createLoginUrl(redirectUri: window.location.origin + "/accident.html"));
 							$('#loginUrl').show();
 							$('#accident-app').hide();
 						}
