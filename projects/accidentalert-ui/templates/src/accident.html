@@ -428,11 +428,12 @@
 		console.log('CLIENT_ID: ' + keycloak_client_id);
 		console.log('KEYCLOAK_ROLE: ' + keycloak_role);
 		console.log('AUTHENTICATION_OPTION: ' + authentication_option);
+		$('#accident-app').hide();
+		$('#loginUrl').hide();
 		
 		if (authentication_option === 'unprotected') {
 			console.log('No authentication performed!');
 			$('#accident-app').show();
-			$('#loginUrl').hide();
 			
 		} else {
 			var keyOptions = {
@@ -477,6 +478,7 @@
 					$('#loginUrl').show();
 				}
 			}).error(function () {
+				alert('Failed to initialize Keycloak!');
 				console.log('Failed to initialize!');
 			});
 			var opts = {
