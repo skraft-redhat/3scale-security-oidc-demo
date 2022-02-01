@@ -431,6 +431,9 @@
 		
 		if (authentication_option === 'unprotected') {
 			console.log('No authentication performed!');
+			$('#accident-app').show();
+			$('#loginUrl').hide();
+			
 		} else {
 			var keyOptions = {
 				url: keycloak_url,
