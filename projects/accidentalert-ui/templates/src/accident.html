@@ -130,6 +130,7 @@
 							<strong>Report Filed!</strong> This is really working out
 							<a href="#" class="alert-link">great for us</a>.
 						</div>
+																	
 						<div class="col-md-8">
 							<h4>Your Report Information:</h4>
 
@@ -457,8 +458,7 @@
 						console.log ('No role check performed');
 						$('#accident-app').show();
 						$('#loginUrl').hide();
-					} else {
-				
+					} else {	
 						if (keycloak.hasRealmRole(keycloak_role)) {
 							$('#accident-app').show();
 							$('#loginUrl').hide();
@@ -470,32 +470,21 @@
 							$('#loginUrl').show();
 							$('#accident-app').hide();
 						}
-						
-					}
-					
+					}		
 				} else {
 					$('#accident-app').hide();
 					$('#loginUrl').show();
 				}
 			}).error(function () {
 				alert('Failed to initialize Keycloak!');
-				console.log('Failed to initialize!');
 			});
 			var opts = {
 				redirectUri: window.location.origin + "/accident.html"
 			};
-			var loginUrl = keycloak.createLoginUrl(opts);
-			
+			var loginUrl = keycloak.createLoginUrl(opts);		
 			console.log('LoginURL: '+loginUrl);
-			
 			document.getElementById('loginUrl').href = loginUrl;	
 		}
-		
 	</script>
-
-
-	
-
 </body>
-
 </html>
