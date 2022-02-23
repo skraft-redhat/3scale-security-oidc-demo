@@ -31,7 +31,39 @@
 			</div>
 		</form>
 
+		
 		<script type="text/javascript">
+			var keycloak_url = 'ENVIRONMENT.KEYCLOAK_URL/auth';
+			var keycloak_realm = 'ENVIRONMENT.KEYCLOAK_REALM';
+			var keycloak_client_id = 'ENVIRONMENT.KEYCLOAK_CLIENT_ID';
+			var keycloak_role = 'ENVIRONMENT.KEYCLOAK_ROLE';
+			var authentication_option = 'ENVIRONMENT.AUTHENTICATION_OPTION';
+				
+			console.log('KEYCLOAK_URL: ' + keycloak_url);
+			console.log('KEYCLOAK_REALM: ' + keycloak_realm);
+			console.log('CLIENT_ID: ' + keycloak_client_id);
+			console.log('KEYCLOAK_ROLE: ' + keycloak_role);
+			console.log('AUTHENTICATION_OPTION: ' + authentication_option);
+			$('#accident-app').hide();
+			$('#loginUrl').hide();
+			
+			
+			var keyOptions = {
+				url: keycloak_url,
+				realm: keycloak_realm,
+				clientId: keycloak_client_id
+			};
+
+			var keycloak = Keycloak(keyOptions);
+			console.log('Start initializing Keycloak');			
+			keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
+				console.log(authenticated ? 'authenticated' : 'not authenticated');	
+			}).error(function () {
+				alert('Failed to initialize Keycloak!');
+			});
+				
+					
+			// call backend
 			var servicerep_url = 'ENVIRONMENT.BACKEND_URL/servicerep/'+keycloak.idTokenParsed.name;
 			$.ajax({
 						type: "get",
