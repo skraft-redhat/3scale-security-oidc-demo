@@ -58,31 +58,32 @@
 				// call backend
 			var customername = keycloak.idTokenParsed.name;
 			var servicerep_url = 'ENVIRONMENT.BACKEND_URL/customers/servicerep/' + customername;
-			$.ajax({
-					type: "get",
-					contentType: "application/json",
-					headers: {
-						'Authorization': 'Bearer ' + keycloak.token
-					},
-					url: servicerep_url,
-					dataType: "json",
-						
-					success: function (data) {
-						console.log('Called back-end successfully!');
-						var jsonstring = JSON.parse(data);
-						document.getElementById('servicerep').value = jsonstring["servicerep"];
-						document.getElementById('servicerep').readOnly = true;
+			(function ($) {
+				$.ajax({
+						type: "get",
+						contentType: "application/json",
+						headers: {
+							'Authorization': 'Bearer ' + keycloak.token
+						},
+						url: servicerep_url,
+						dataType: "json",
 							
-					},
-					error: function (req, error,errorThrown) {
-						alert('Back-end could not be accessed!');
-						console.log('Error:' + errorThrown);
-					}
-			});
-			}).error(function () {
-				alert('Failed to initialize Keycloak!');
-			});
-				
+						success: function (data) {
+							console.log('Called back-end successfully!');
+							var jsonstring = JSON.parse(data);
+							document.getElementById('servicerep').value = jsonstring["servicerep"];
+							document.getElementById('servicerep').readOnly = true;
+								
+						},
+						error: function (req, error,errorThrown) {
+							alert('Back-end could not be accessed!');
+							console.log('Error:' + errorThrown);
+						}
+				});
+				}).error(function () {
+					alert('Failed to initialize Keycloak!');
+				});
+			})(jQuery);	
 					
 			
 		</script>
