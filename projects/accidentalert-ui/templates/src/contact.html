@@ -24,6 +24,37 @@
 
 
 	<body>
+		<form id="Contacts">
+			<div class="form-group">
+				<label for="servicerep" class="required-pf">Your Service Representative:</label>
+				<input type="text" class="form-control" name="servicerep" id="servicerep" placeholder="Service Rep">
+			</div>
+		</form>
+
+		<script type="text/javascript">
+			var servicerep_url = 'ENVIRONMENT.BACKEND_URL/servicerep/'+keycloak.idTokenParsed.name;
+			$.ajax({
+						type: "get",
+						contentType: "application/json",
+						headers: {
+							'Authorization': 'Bearer ' + keycloak.token
+						},
+						url: servicerep_url,
+						dataType: "json",
+						
+						success: function (data) {
+							console.log('Called back-end successfully!');
+							var jsonstring = JSON.parse(data);
+							document.getElementById('servicerep').value = jsonstring["servicerep"];
+							document.getElementById('servicerep').readOnly = true;
+							
+						},
+						error: function (req, error,errorThrown) {
+							alert('Back-end could not be accessed!');
+							console.log('Error:' + errorThrown);
+						}
+			});
+		</script>
     </body>
 
     </html>
