@@ -42,10 +42,7 @@
 			console.log('KEYCLOAK_URL: ' + keycloak_url);
 			console.log('KEYCLOAK_REALM: ' + keycloak_realm);
 			console.log('CLIENT_ID: ' + keycloak_client_id);
-			console.log('KEYCLOAK_ROLE: ' + keycloak_role);
-			console.log('AUTHENTICATION_OPTION: ' + authentication_option);
-			$('#accident-app').hide();
-			$('#loginUrl').hide();
+			
 			
 			
 			var keyOptions = {
@@ -64,7 +61,7 @@
 				
 					
 			// call backend
-			var servicerep_url = 'ENVIRONMENT.BACKEND_URL/servicerep/'+keycloak.idTokenParsed.name;
+			var servicerep_url = 'ENVIRONMENT.BACKEND_URL/customers/servicerep/'+keycloak.idTokenParsed.name;
 			$.ajax({
 						type: "get",
 						contentType: "application/json",
