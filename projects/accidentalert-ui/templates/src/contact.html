@@ -33,6 +33,7 @@
 
 		
 		<script type="text/javascript">
+		(function ($) {
 			var keycloak_url = 'ENVIRONMENT.KEYCLOAK_URL/auth';
 			var keycloak_realm = 'ENVIRONMENT.KEYCLOAK_REALM';
 			var keycloak_client_id = 'ENVIRONMENT.KEYCLOAK_CLIENT_ID';
@@ -56,10 +57,10 @@
 			keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
 				console.log(authenticated ? 'authenticated' : 'not authenticated');	
 				// call backend
-			var customername = keycloak.idTokenParsed.name;
-			var servicerep_url = 'ENVIRONMENT.BACKEND_URL/customers/servicerep/' + customername;
-			(function ($) {
-				$.ajax({
+				var customername = keycloak.idTokenParsed.name;
+				var servicerep_url = 'ENVIRONMENT.BACKEND_URL/customers/servicerep/' + customername;
+				(function ($) {
+					$.ajax({
 						type: "get",
 						contentType: "application/json",
 						headers: {
@@ -67,23 +68,23 @@
 						},
 						url: servicerep_url,
 						dataType: "json",
-							
+						
 						success: function (data) {
 							console.log('Called back-end successfully!');
 							var jsonstring = JSON.parse(data);
 							document.getElementById('servicerep').value = jsonstring["servicerep"];
 							document.getElementById('servicerep').readOnly = true;
-								
 						},
 						error: function (req, error,errorThrown) {
 							alert('Back-end could not be accessed!');
 							console.log('Error:' + errorThrown);
 						}
+					});
 				});
-				}).error(function () {
-					alert('Failed to initialize Keycloak!');
-				});
+			}).error(function () {
+				alert('Failed to initialize Keycloak!');
 			});			
+		});
 		</script>
     </body>
 
