@@ -136,6 +136,10 @@
 
 							<form id="report">
 								<div class="form-group">
+									<label for="serviceContact" class="required-pf">serviceContact:</label>
+									<input type="text" class="form-control" name="serviceContact" id="serviceContact" placeholder="Contact Name">
+								</div>
+								<div class="form-group">
 									<label for="contactName" class="required-pf">Contact Name:</label>
 									<input type="text" class="form-control" name="contactName" id="contactName" placeholder="Contact Name">
 								</div>
@@ -365,6 +369,7 @@
 			$('#description').on("overCharsMaxLimitEvent", function (event, taId) {
 				$('#postReport').prop("disabled", true);
 			});
+
 			$('#description').on("underCharsMaxLimitEvent", function (event, taId) {
 				$('#postReport').prop("disabled", false);
 			});
@@ -410,10 +415,27 @@
 						}
 					});	
 				}
-				
+				$.ajax({
+						type: "get",
+						contentType: "application/json",
+						headers: {
+							'Authorization': 'Bearer ' + keycloak.token
+						},
+						url: backend_url,
+						dataType: "json",
+						data: reqdata,
+						success: function (data) {
+							console.log('Called back-end successfully!');
+							$('#success-notification').show();
+						},
+						error: function (req, error,errorThrown) {
+							alert('Back-end could not be accessed!');
+							console.log('Error:' + errorThrown);
+						}
+				});
 				
 			});
-		})(jQuery);
+		});
 	</script>
 	
 	<script type="text/javascript">
@@ -433,8 +455,7 @@
 		
 		if (authentication_option === 'unprotected') {
 			console.log('No authentication performed!');
-			$('#accident-app').show();
-			
+			$('#accident-app').show();	
 		} else {
 			console.log('Authentication required!');
 			var keyOptions = {
