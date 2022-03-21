@@ -1,51 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
-		
-		<title>Shadowman Insurance</title>
 
-		<!-- Loading third party fonts -->
-		<link href="http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|" rel="stylesheet" type="text/css">
-		<link href="assets/fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
-		<link href="assets/fonts/lineo-icon/style.css" rel="stylesheet" type="text/css">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
 
-		<!-- Loading main css file -->
-		<link rel="stylesheet" href="assets/css/styles.min.css">
-		<script src="ENVIRONMENT.KEYCLOAK_URL/auth/js/keycloak.js"></script>		
-		<!--[if lt IE 9]>
+	<title>Shadowman Insurance</title>
+
+	<!-- Loading third party fonts -->
+	<link href="http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|" rel="stylesheet" type="text/css">
+	<link href="assets/fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/fonts/lineo-icon/style.css" rel="stylesheet" type="text/css">
+
+	<!-- Loading main css file -->
+	<link rel="stylesheet" href="assets/css/styles.min.css">
+	<script src="ENVIRONMENT.KEYCLOAK_URL/auth/js/keycloak.js"></script>
+	<!--[if lt IE 9]>
 		<script src="js/ie-support/html5.js"></script>
 		<script src="js/ie-support/respond.js"></script>
 		<![endif]-->
 
-	</head>
+</head>
 
 
-	<body>
-		<form id="Contacts">
-			<div class="form-group">
-				<label for="servicerep" class="required-pf">Your Service Representative:</label>
-				<input type="text" class="form-control" name="servicerep" id="servicerep" placeholder="Service Rep">
-			</div>
-		</form>
+<body>
 
-		
-		<script type="text/javascript">
-		(function ($) {
-			var keycloak_url = 'ENVIRONMENT.KEYCLOAK_URL/auth';
-			var keycloak_realm = 'ENVIRONMENT.KEYCLOAK_REALM';
-			var keycloak_client_id = 'ENVIRONMENT.KEYCLOAK_CLIENT_ID';
-			var keycloak_role = 'ENVIRONMENT.KEYCLOAK_ROLE';
-			var authentication_option = 'ENVIRONMENT.AUTHENTICATION_OPTION';
-				
-			console.log('KEYCLOAK_URL: ' + keycloak_url);
-			console.log('KEYCLOAK_REALM: ' + keycloak_realm);
-			console.log('CLIENT_ID: ' + keycloak_client_id);
-			
-			
-			
+	<div class="container">
+		<a id="loginUrl" href="#" class="btn btn-primary btn-lg">Log In to access</a>
+	</div>
+
+	<form id="Contacts">
+		<div class="form-group">
+			<label for="servicerep" class="required-pf">Your Service Representative:</label>
+			<input type="text" class="form-control" name="servicerep" id="servicerep" placeholder="Service Rep">
+		</div>
+	</form>
+
+	<script src="assets/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript">
+		var keycloak_url = 'ENVIRONMENT.KEYCLOAK_URL/auth';
+		var keycloak_realm = 'ENVIRONMENT.KEYCLOAK_REALM';
+		var keycloak_client_id = 'ENVIRONMENT.KEYCLOAK_CLIENT_ID';
+		var keycloak_role = 'ENVIRONMENT.KEYCLOAK_ROLE';
+		// var authentication_option = 'ENVIRONMENT.AUTHENTICATION_OPTION';
+		var authentication_option = 'secured';
+
+		console.log('KEYCLOAK_URL: ' + keycloak_url);
+		console.log('KEYCLOAK_REALM: ' + keycloak_realm);
+		console.log('CLIENT_ID: ' + keycloak_client_id);
+
+		var backend_url = 'ENVIRONMENT.BACKEND_URL';
+		console.log('BACKEND_URL: ' + backend_url);
+
+		console.log("auth", authentication_option)
+
+		$('#loginUrl').hide();
+
+		if (authentication_option === 'unprotected' || authentication_option === 'none') {
+			// call backend
+			// var customername = keycloak.idTokenParsed.name;
+			// var servicerep_url = 'ENVIRONMENT.BACKEND_URL/customers/servicerep/' + customername;
+			var servicerep_url = 'ENVIRONMENT.BACKEND_URL/person/eyes/HAZEL';
+
+			$.ajax({
+				type: "get",
+				contentType: "application/json",
+				url: servicerep_url,
+				dataType: "json",
+				success: function (data) {
+					console.log('Called back-end successfully!', data);
+					// var jsonstring = JSON.parse(data);
+					// document.getElementById('servicerep').value = jsonstring["servicerep"];
+					document.getElementById('servicerep').value = data[0].name;
+					document.getElementById('servicerep').readOnly = true;
+				},
+				error: function (req, error, errorThrown) {
+					alert('Back-end could not be accessed!');
+					console.log('Error:' + errorThrown);
+				}
+			});
+		}
+		else {
 			var keyOptions = {
 				url: keycloak_url,
 				realm: keycloak_realm,
@@ -53,13 +89,16 @@
 			};
 
 			var keycloak = Keycloak(keyOptions);
-			console.log('Start initializing Keycloak');			
-			keycloak.init({ onLoad: 'check-sso' }).success(function (authenticated) {
-				console.log(authenticated ? 'authenticated' : 'not authenticated');	
-				// call backend
-				var customername = keycloak.idTokenParsed.name;
-				var servicerep_url = 'ENVIRONMENT.BACKEND_URL/customers/servicerep/' + customername;
-				(function ($) {
+			console.log('Start initializing Keycloak');
+			keycloak.init({ onLoad: 'check-sso' }).then(function (authenticated) {
+				console.log(authenticated ? 'authenticated' : 'not authenticated');
+
+				if (authenticated) {
+					// call backend
+					console.log("parsedToken",keycloak.idTokenParsed)
+					var customername = keycloak.idTokenParsed.preferred_username;
+					var servicerep_url = 'ENVIRONMENT.BACKEND_URL/customers/servicerep/' + customername;
+
 					$.ajax({
 						type: "get",
 						contentType: "application/json",
@@ -68,22 +107,30 @@
 						},
 						url: servicerep_url,
 						dataType: "json",
-						
+
 						success: function (data) {
 							console.log('Called back-end successfully!');
 							var jsonstring = JSON.parse(data);
 							document.getElementById('servicerep').value = jsonstring["servicerep"];
 							document.getElementById('servicerep').readOnly = true;
 						},
-						error: function (req, error,errorThrown) {
+						error: function (req, error, errorThrown) {
 							alert('Back-end could not be accessed!');
 							console.log('Error:' + errorThrown);
 						}
 					});
-				});
-			})		
-		});
-		</script>
-    </body>
+				} else {
+					$('#loginUrl').show();
+				}
+			});
+			var opts = {
+				redirectUri: window.location.origin + "/contact.html"
+			};
+			var loginUrl = keycloak.createLoginUrl(opts);	
+			
+			document.getElementById('loginUrl').href = loginUrl;
+		}
+	</script>
+</body>
 
-    </html>
+</html>
